@@ -14,12 +14,12 @@ pipeline {
               sh "chmod +x changeTag.sh"
               sh "./changeTag.sh ${Docker_TAG}"
               sshagent(['sampledemo']) {
-                  sh "scp -o  StrictHostKeyChecking=no /var/lib/jenkins/workspace/kube1/services.yml ubuntu@13.233.66.168:/home/ubuntu/"
+                  sh "scp -o  StrictHostKeyChecking=no services.yml ubuntu@13.233.66.168:/home/ubuntu/"
                   script{
                       try{
-                          sh "ssh ubuntu@13.233.66.168 kubectl apply -f ."
+                          sh "ssh ubuntu@13.233.66.168 kubectl apply -f services.yml"
                       } catch(error){
-                           sh "ssh ubuntu@13.233.66.168 kubectl create -f ."
+                           sh "ssh ubuntu@13.233.66.168 kubectl create -f services.yml"
                    
 }
                                     }
