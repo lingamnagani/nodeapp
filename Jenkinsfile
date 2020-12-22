@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{
-         Docker_TAG = getDcokerTag()
+          Docker_TAG = getDockerTag()
     }
     stages{
         stage('Build Docker Image'){
