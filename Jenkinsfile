@@ -3,15 +3,7 @@ pipeline {
     stages{
         stage('Build Docker Image'){
             steps{
-                sh "docker build . -t  gsaini05/nodeapp:${Docker_TAG}"
-            }
-        }
-        stage('DockerHub Push'){
-            steps{
-                withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
-                    sh "docker login -u lingamnagani -p ${dockerHubPwd}"
-                    sh "docker push lingamnagani/dockertestfile:${Docker_TAG}"
-                }
+                sh "docker build . -t kamana/nodeapp:${Docker_TAG}"
             }
         }
         stage('Deploy App') {
