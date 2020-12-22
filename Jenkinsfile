@@ -3,10 +3,10 @@ pipeline {
     stages{
         stage('Build Docker Image'){
             steps{
-                sh "docker build . -t  gsaini05/nodeapp ${Docker_TAG}"
+                sh "docker build . -t  gsaini05/nodeapp:${Docker_TAG}"
             }
         }
-        stage('Docker Push'){
+        stage('DockerHub Push'){
             steps{
                 withCredentials([string(credentialsId: 'docker-hub', variable: 'dockerHubPwd')]) {
                     sh "docker login -u lingamnagani -p ${dockerHubPwd}"
@@ -14,8 +14,8 @@ pipeline {
                 }
             }
         }
-       stage('Deploy App') {
-        steps {
+        stage('Deploy App') {
+         steps {
               sh "chmod +x changeTag.sh"
               sh "./changeTag.sh ${Docker_TAG}"
               sshagent(['kserver']) {
@@ -32,4 +32,8 @@ pipeline {
         }
     }
 }
+}
+def getDockerTag(){
+    def tag  = sh script: 'git rev-parse HEAD', returnStdout: true
+    return tag
 }
