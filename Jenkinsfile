@@ -13,7 +13,7 @@ pipeline {
          steps{
               sh "chmod +x changeTag.sh"
               sh "./changeTag.sh ${Docker_TAG}"
-              sshagent(['kserver']) {
+              sshagent(['sampledemo']) {
                   sh "scp -o  StrictHostKeyChecking=no /var/lib/jenkins/workspace/kube1/services.yml ubuntu@13.233.66.168:/home/ubuntu/"
                   script{
                       try{
